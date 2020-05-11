@@ -17,20 +17,3 @@ void insertion_sort(int n, int data[]) {
     }
   }
 }
-
-int main() {
-  int N = 10;
-  int data[] = {5, 3, 9, 6, 7, 1, 0, 8, 4, 2};
-
-  insertion_sort(N, data);
-
-  for (int i = 0; i < N; ++i) {
-    cout << data[i];
-
-    if (i == N - 1) {
-      cout << endl;
-    } else {
-      cout << " ";
-    }
-  }
-}
