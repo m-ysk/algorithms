@@ -33,6 +33,7 @@ int main() {
   int N = 20000;
   int origin[N];
 
+  srand(time(0));
   for (int i = 0; i < N; ++i) {
     origin[i] = rand();
   }
@@ -61,6 +62,18 @@ int main() {
   primitive_bubble_sort(N, data);
   end = chrono::system_clock::now();
   validate_result(N, data, "Bubble sort");
+  time = static_cast<double>(
+      chrono::duration_cast<chrono::milliseconds>(end - start).count());
+  printf("time %lf[ms]\n", time);
+
+  // Improved bubble sort
+  memcpy(data, origin, sizeof(origin));
+
+  validate_initial_data(N, data);
+  start = chrono::system_clock::now();
+  improved_bubble_sort(N, data);
+  end = chrono::system_clock::now();
+  validate_result(N, data, "Improved bubble sort");
   time = static_cast<double>(
       chrono::duration_cast<chrono::milliseconds>(end - start).count());
   printf("time %lf[ms]\n", time);
