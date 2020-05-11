@@ -5,6 +5,7 @@
 
 #include "bubble_sort.cpp"
 #include "insertion_sort.cpp"
+#include "merge_sort.cpp"
 #include "quick_sort.cpp"
 
 using namespace std;
@@ -35,6 +36,7 @@ void validate_result(int n, int data[], string name) {
 const int large_N = 1000000;
 int large_origin[large_N];
 int large_data[large_N];
+int large_arr[large_N];
 
 int main() {
   int N = 10000;
@@ -97,6 +99,20 @@ int main() {
       chrono::duration_cast<chrono::milliseconds>(end - start).count());
   printf("time %lf[ms]\n", time);
 
+  memcpy(data, origin, sizeof(origin));
+
+  // Merge sort
+  int arr[N];
+
+  validate_initial_data(N, data);
+  start = chrono::system_clock::now();
+  merge_sort(data, arr, 0, N);
+  end = chrono::system_clock::now();
+  validate_result(N, data, "Merge sort");
+  time = static_cast<double>(
+      chrono::duration_cast<chrono::milliseconds>(end - start).count());
+  printf("time %lf[ms]\n", time);
+
   // Large data
   for (int i = 0; i < large_N; ++i) {
     large_origin[i] = rand();
@@ -110,6 +126,18 @@ int main() {
   quick_sort(0, large_N - 1, large_data);
   end = chrono::system_clock::now();
   validate_result(large_N, large_data, "Quick sort large");
+  time = static_cast<double>(
+      chrono::duration_cast<chrono::milliseconds>(end - start).count());
+  printf("time %lf[ms]\n", time);
+
+  // Merge sort large
+  memcpy(large_data, large_origin, sizeof(large_origin));
+
+  validate_initial_data(large_N, large_data);
+  start = chrono::system_clock::now();
+  merge_sort(large_data, large_arr, 0, large_N);
+  end = chrono::system_clock::now();
+  validate_result(large_N, large_data, "Merge sort large");
   time = static_cast<double>(
       chrono::duration_cast<chrono::milliseconds>(end - start).count());
   printf("time %lf[ms]\n", time);
