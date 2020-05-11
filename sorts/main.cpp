@@ -5,6 +5,7 @@
 
 #include "bubble_sort.cpp"
 #include "insertion_sort.cpp"
+#include "quick_sort.cpp"
 
 using namespace std;
 
@@ -74,6 +75,18 @@ int main() {
   improved_bubble_sort(N, data);
   end = chrono::system_clock::now();
   validate_result(N, data, "Improved bubble sort");
+  time = static_cast<double>(
+      chrono::duration_cast<chrono::milliseconds>(end - start).count());
+  printf("time %lf[ms]\n", time);
+
+  // Quick sort
+  memcpy(data, origin, sizeof(origin));
+
+  validate_initial_data(N, data);
+  start = chrono::system_clock::now();
+  quick_sort(0, N, data);
+  end = chrono::system_clock::now();
+  validate_result(N, data, "Quick sort");
   time = static_cast<double>(
       chrono::duration_cast<chrono::milliseconds>(end - start).count());
   printf("time %lf[ms]\n", time);
