@@ -24,14 +24,20 @@ void validate_result(int n, int data[], string name) {
   for (int i = 0; i < n - 1; ++i) {
     if (data[i] > data[i + 1]) {
       cout << "failed: " << name << endl;
+      cout << i << ": " << data[i] << endl;
+      cout << i + 1 << ": " << data[i + 1] << endl;
       return;
     }
   }
   cout << "success: " << name << endl;
 }
 
+const int large_N = 1000000;
+int large_origin[large_N];
+int large_data[large_N];
+
 int main() {
-  int N = 20000;
+  int N = 10000;
   int origin[N];
 
   srand(time(0));
@@ -84,9 +90,26 @@ int main() {
 
   validate_initial_data(N, data);
   start = chrono::system_clock::now();
-  quick_sort(0, N, data);
+  quick_sort(0, N - 1, data);
   end = chrono::system_clock::now();
   validate_result(N, data, "Quick sort");
+  time = static_cast<double>(
+      chrono::duration_cast<chrono::milliseconds>(end - start).count());
+  printf("time %lf[ms]\n", time);
+
+  // Large data
+  for (int i = 0; i < large_N; ++i) {
+    large_origin[i] = rand();
+  }
+
+  // Quick sort large
+  memcpy(large_data, large_origin, sizeof(large_origin));
+
+  validate_initial_data(large_N, large_data);
+  start = chrono::system_clock::now();
+  quick_sort(0, large_N - 1, large_data);
+  end = chrono::system_clock::now();
+  validate_result(large_N, large_data, "Quick sort large");
   time = static_cast<double>(
       chrono::duration_cast<chrono::milliseconds>(end - start).count());
   printf("time %lf[ms]\n", time);
